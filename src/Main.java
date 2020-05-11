@@ -5,6 +5,8 @@ public class Main {
 
         String path = "";
         String countLine= "";
+        String lineForSearch = "";
+        String lineForReplace = "";
         /*if (args.length ==2) {
             try {
                 path = args[0];
@@ -20,9 +22,11 @@ public class Main {
             System.out.println("Please insert width and length after name of class");
             System.exit(1);
         }*/
-        Files f = new Files(path, countLine);
+        ParseFile f = new ParseFile(path, countLine, lineForSearch, lineForReplace);
         //f.readFile();
         f.readPath();
-        f.compare();
+        System.out.println();
+       // f.compare();
+        f.replacement();
     }
 }
