@@ -12,6 +12,7 @@ public class ParseFile {
     String lineForSearch;
     String lineForReplace;
     String content;
+    List <String> links1;
 
     public ParseFile(String path, String countLine, String lineForSearch, String lineForReplace)  {
         this.path = path;
@@ -32,22 +33,34 @@ public class ParseFile {
     }
 
     public void replacement() throws IOException {
-        content  = String.valueOf(Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8));
+        content = String.valueOf(Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8));
         Pattern pattern = Pattern.compile(lineForSearch);
+        links1 = java.nio.file.Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8);
         Matcher matcher = pattern.matcher(content);
-        content = matcher.replaceAll(lineForReplace);
-    }
-
-    public void saveFile() throws IOException {
-        try(FileWriter writer = new FileWriter(path))
-        {
-            writer.write(content);
-            writer.append('\n');
-            writer.flush();
-        }
-        catch(IOException ex){
-
-            System.out.println(ex.getMessage());
+        int i=0;
+        for (String line : links1) {
+            i++;
+            if (links1.contains(lineForSearch)){
+           // if(matcher.find()== true) {
+               // content = matcher.replaceAll(lineForReplace);
+                links1.set(i, lineForReplace);
+            }
         }
     }
+
+
+public void saveFile() throws IOException {
+    FileOutputStream output = null;
+
+            output = new FileOutputStream(path);
+
+        final String LINE_SEPARATOR = System.getProperty("line.separator");
+        for (String line1 : links1) {
+            if (line1 != null) {
+                output.write(line1.getBytes());
+                output.write(LINE_SEPARATOR.getBytes());
+            }
+        }
+}
+
 }
