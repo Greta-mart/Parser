@@ -11,10 +11,9 @@ public class ParseFile {
     String countLine;
     String lineForSearch;
     String lineForReplace;
-    String content;
-    List <String> links1;
+    List<String> links1;
 
-    public ParseFile(String path, String countLine, String lineForSearch, String lineForReplace)  {
+    public ParseFile(String path, String countLine, String lineForSearch, String lineForReplace) {
         this.path = path;
         this.countLine = countLine;
         this.lineForSearch = lineForSearch;
@@ -23,7 +22,7 @@ public class ParseFile {
 
     public int compare() throws IOException {
         int count = 0;
-        String content  = String.valueOf(Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8));
+        String content = String.valueOf(Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8));
         Pattern pattern = Pattern.compile(countLine);
         Matcher matcher = pattern.matcher(content);
         while (matcher.find()) {
@@ -33,27 +32,16 @@ public class ParseFile {
     }
 
     public void replacement() throws IOException {
-        content = String.valueOf(Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8));
-        Pattern pattern = Pattern.compile(lineForSearch);
         links1 = java.nio.file.Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8);
-        Matcher matcher = pattern.matcher(content);
-        int i=0;
-        for (String line : links1) {
-            i++;
-            if (links1.contains(lineForSearch)){
-           // if(matcher.find()== true) {
-               // content = matcher.replaceAll(lineForReplace);
-                links1.set(i, lineForReplace);
-            }
+        for (int i = 0; i < links1.size(); i++) {
+            String line = links1.get(i);
+            String str = line.replaceAll(lineForSearch, lineForReplace);
+            links1.set(i, str);
         }
     }
 
-
-public void saveFile() throws IOException {
-    FileOutputStream output = null;
-
-            output = new FileOutputStream(path);
-
+    public void saveFile() throws IOException {
+        FileOutputStream output = new FileOutputStream(path);
         final String LINE_SEPARATOR = System.getProperty("line.separator");
         for (String line1 : links1) {
             if (line1 != null) {
@@ -61,6 +49,5 @@ public void saveFile() throws IOException {
                 output.write(LINE_SEPARATOR.getBytes());
             }
         }
-}
-
+    }
 }

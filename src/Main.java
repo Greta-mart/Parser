@@ -8,27 +8,22 @@ public class Main {
         String lineForReplace = "";
 
         if (args.length == 2) {
-            try {
-                path = args[0];
-                countLine = args[1];
-            } catch (Exception ex) {
-                System.out.println(ex.getLocalizedMessage());
-            }
+            path = args[0];
+            countLine = args[1];
+
             ParseFile f = new ParseFile(path, countLine, lineForSearch, lineForReplace);
             System.out.println(f.compare());
-            //
+
         } else if (args.length == 3) {
-            try {
-                path = args[0];
-                lineForSearch = args[1];
-                lineForReplace = args[2];
-            } catch (Exception ex) {
-                System.out.println(ex.getLocalizedMessage());
-            }
+            path = args[0];
+            lineForSearch = args[1];
+            lineForReplace = args[2];
+
             ParseFile f = new ParseFile(path, countLine, lineForSearch, lineForReplace);
             f.replacement();
             f.saveFile();
             System.out.println("File was successfully saved with replacement data");
+
         } else {
             System.out.println("Please insert path for file, line for search or line for search and than line for replace");
             System.exit(1);
