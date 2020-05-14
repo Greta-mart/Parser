@@ -1,7 +1,8 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         String path = "";
         String countLine = "";
         String lineForSearch = "";
@@ -15,7 +16,8 @@ public class Main {
                 System.out.println(ex.getLocalizedMessage());
             }
             ParseFile f = new ParseFile(path, countLine, lineForSearch, lineForReplace);
-            f.compare();
+            System.out.println(f.compare());
+            //
         } else if (args.length == 3) {
             try {
                 path = args[0];
@@ -26,6 +28,7 @@ public class Main {
             }
             ParseFile f = new ParseFile(path, countLine, lineForSearch, lineForReplace);
             f.replacement();
+            f.saveFile();
             System.out.println("File was successfully saved with replacement data");
         } else {
             System.out.println("Please insert path for file, line for search or line for search and than line for replace");
