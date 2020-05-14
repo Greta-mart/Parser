@@ -8,22 +8,20 @@ import java.util.regex.Pattern;
 
 public class ParseFile {
     String path;
-    String countLine;
-    String lineForSearch;
+    String searchPattern;
     String lineForReplace;
     List<String> links1;
 
-    public ParseFile(String path, String countLine, String lineForSearch, String lineForReplace) {
+    public ParseFile(String path, String searchPattern, String lineForReplace) {
         this.path = path;
-        this.countLine = countLine;
-        this.lineForSearch = lineForSearch;
+        this.searchPattern = searchPattern;
         this.lineForReplace = lineForReplace;
     }
 
     public int compare() throws IOException {
         int count = 0;
         String content = String.valueOf(Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8));
-        Pattern pattern = Pattern.compile(countLine);
+        Pattern pattern = Pattern.compile(searchPattern);
         Matcher matcher = pattern.matcher(content);
         while (matcher.find()) {
             count++;
@@ -35,8 +33,7 @@ public class ParseFile {
         links1 = java.nio.file.Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8);
         for (int i = 0; i < links1.size(); i++) {
             String line = links1.get(i);
-            String str = line.replaceAll(lineForSearch, lineForReplace);
-            links1.set(i, str);
+            links1.set(i, line.replaceAll(searchPattern, lineForReplace));
         }
     }
 
