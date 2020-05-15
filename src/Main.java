@@ -1,7 +1,7 @@
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         String path = "";
         String searchPattern = "";
         String lineForReplace = "";
@@ -11,7 +11,11 @@ public class Main {
             searchPattern = args[1];
 
             ParseFile f = new ParseFile(path, searchPattern, lineForReplace);
-            System.out.println(f.compare());
+            try {
+                System.out.println(f.compare());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         } else if (args.length == 3) {
             path = args[0];
@@ -19,8 +23,16 @@ public class Main {
             lineForReplace = args[2];
 
             ParseFile f = new ParseFile(path, searchPattern, lineForReplace);
-            f.replacement();
-            f.saveFile();
+            try {
+                f.replacement();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                f.saveFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             System.out.println("File was successfully saved with replacement data");
 
         } else {
