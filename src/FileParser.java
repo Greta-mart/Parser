@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ParseFile {
+public class FileParser {
     String path;
     String searchPattern;
     String lineForReplace;
-    List<String> links1;
+    List<String> allLines;
 
-    public ParseFile(String path, String searchPattern, String lineForReplace) {
+    public FileParser(String path, String searchPattern, String lineForReplace) {
         this.path = path;
         this.searchPattern = searchPattern;
         this.lineForReplace = lineForReplace;
@@ -30,20 +30,17 @@ public class ParseFile {
     }
 
     public void replacement() throws IOException {
-        links1 = java.nio.file.Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8);
-        for (int i = 0; i < links1.size(); i++) {
-            String line = links1.get(i);
-            links1.set(i, line.replaceAll(searchPattern, lineForReplace));
-        }
-    }
-
-    public void saveFile() throws IOException {
-        FileOutputStream output = new FileOutputStream(path);
-        final String LINE_SEPARATOR = System.getProperty("line.separator");
-        for (String line1 : links1) {
-            if (line1 != null) {
-                output.write(line1.getBytes());
-                output.write(LINE_SEPARATOR.getBytes());
+        allLines = java.nio.file.Files.readAllLines(Paths.get(path), StandardCharsets.UTF_8);
+        for (int i = 0; i < allLines.size(); i++) {
+            String line = allLines.get(i);
+            allLines.set(i, line.replaceAll(searchPattern, lineForReplace));
+            FileOutputStream output = new FileOutputStream(path);
+            final String LINE_SEPARATOR = System.getProperty("line.separator");
+            for (String line1 : allLines) {
+                if (line1 != null) {
+                    output.write(line1.getBytes());
+                    output.write(LINE_SEPARATOR.getBytes());
+                }
             }
         }
     }

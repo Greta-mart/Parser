@@ -10,7 +10,7 @@ public class Main {
             path = args[0];
             searchPattern = args[1];
 
-            ParseFile f = new ParseFile(path, searchPattern, lineForReplace);
+            FileParser f = new FileParser(path, searchPattern, lineForReplace);
             try {
                 System.out.println(f.compare());
             } catch (IOException e) {
@@ -22,19 +22,13 @@ public class Main {
             searchPattern = args[1];
             lineForReplace = args[2];
 
-            ParseFile f = new ParseFile(path, searchPattern, lineForReplace);
+            FileParser f = new FileParser(path, searchPattern, lineForReplace);
             try {
                 f.replacement();
+                System.out.println("File was successfully saved with replacement data");
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            try {
-                f.saveFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println("File was successfully saved with replacement data");
-
         } else {
             System.out.println("Please insert path for file, line for search or line for search and than line for replace");
             System.exit(1);
