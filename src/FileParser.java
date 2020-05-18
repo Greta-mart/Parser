@@ -34,14 +34,15 @@ public class FileParser {
         for (int i = 0; i < allLines.size(); i++) {
             String line = allLines.get(i);
             allLines.set(i, line.replaceAll(searchPattern, lineForReplace));
-            FileOutputStream output = new FileOutputStream(path);
-            final String LINE_SEPARATOR = System.getProperty("line.separator");
-            for (String line1 : allLines) {
-                if (line1 != null) {
-                    output.write(line1.getBytes());
-                    output.write(LINE_SEPARATOR.getBytes());
-                }
+        }
+        FileOutputStream output = new FileOutputStream(path);
+        final String LINE_SEPARATOR = System.getProperty("line.separator");
+        for (String line1 : allLines) {
+            if (line1 != null) {
+                output.write(line1.getBytes());
+                output.write(LINE_SEPARATOR.getBytes());
             }
         }
+
     }
 }
